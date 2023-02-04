@@ -12,6 +12,5 @@ public class Main {
         System.out.println(new DatabaseQueryService().findLongestPrs().toString());
         System.out.println(new DatabaseQueryService().findYoungOldWorker().toString());
         System.out.println(new DatabaseQueryService().printPrPrice().toString());
-
     }
 }

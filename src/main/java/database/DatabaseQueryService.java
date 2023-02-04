@@ -3,6 +3,7 @@ package database;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -24,8 +25,8 @@ public class DatabaseQueryService {
         List<MaxSalary> maxSalaryList = new ArrayList<>();
         String sql = String.join("\n", Files.readAllLines(Paths.get(FIND_MAX_SALARY)));
         Database date = new Database();
-        try (Statement st = date.getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)
+        try (PreparedStatement st = date.getConnection().prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
         ) {
             while (rs.next()) {
                 maxSalaryList.add(new MaxSalary(rs.getInt("SALARY"), rs.getString("NAME")));
@@ -42,8 +43,8 @@ public class DatabaseQueryService {
         List<MaxProjectCountClient> maxProjectCountClientList = new ArrayList<>();
         String sql = String.join("\n", Files.readAllLines(Paths.get(FIND_MAX_PR_CL)));
         Database date = new Database();
-        try (Statement st = date.getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)
+        try (PreparedStatement st = date.getConnection().prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
         ) {
             while (rs.next()) {
                 maxProjectCountClientList.add(new MaxProjectCountClient(rs.getString("NAME"), rs.getInt("PROJECT_COUNT")));
@@ -60,8 +61,8 @@ public class DatabaseQueryService {
         List<LongestPr> longestPrList = new ArrayList<>();
         Database date = new Database();
         String sql = String.join("\n", Files.readAllLines(Paths.get(FIND_LONGEST_Pr)));
-        try (Statement st = date.getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)
+        try (PreparedStatement st = date.getConnection().prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
         ) {
             while (rs.next()) {
                 longestPrList.add(new LongestPr(rs.getInt("ID"), rs.getInt("MONTH_COUNT")));
@@ -78,8 +79,8 @@ public class DatabaseQueryService {
         List<YoungOldWorker> youngOldWorkerList = new ArrayList<>();
         Database date = new Database();
         String sql = String.join("\n", Files.readAllLines(Paths.get(FIND_YOUNG_OLD_WORKER)));
-        try (Statement st = date.getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)
+        try (PreparedStatement st = date.getConnection().prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
         ) {
             while (rs.next()) {
                 youngOldWorkerList.add(new YoungOldWorker(rs.getString("TYPE"), rs.getString("NAME"), LocalDate.parse(rs.getString("BIRTHDAY"))));
@@ -96,8 +97,8 @@ public class DatabaseQueryService {
         List<PrPrice> prPriceList = new ArrayList<>();
         Database date = new Database();
         String sql = String.join("\n", Files.readAllLines(Paths.get(PRINT_PR_PRICES)));
-        try (Statement st = date.getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)
+        try (PreparedStatement st = date.getConnection().prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
         ) {
             while (rs.next()) {
                 prPriceList.add(new PrPrice(rs.getInt("PROJECT_ID"), rs.getInt("PRICE")));
